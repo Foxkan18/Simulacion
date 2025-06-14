@@ -1,0 +1,405 @@
+/* Variables para colores y dimensiones */
+:root {
+    --primary-color: #2196f3;
+    --primary-dark: #1976d2;
+    --accent-color: #ff5722;
+    --accent-dark: #e64a19;
+    --catapult-color: #795548;
+    --catapult-light: #a1887f;
+    --catapult-dark: #4b2c20;
+    --background-color: #e0f7fa;
+    --text-color: #333333;
+    --panel-bg: #ffffff;
+    --border-radius: 8px;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos generales */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--background-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: var(--primary-dark);
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+}
+
+h3 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin: 10px 0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Paneles */
+.panel {
+    background: var(--panel-bg);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    box-shadow: var(--shadow);
+    flex: 1;
+    min-width: 300px;
+}
+
+.control-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Controles */
+.controls {
+    margin-bottom: 15px;
+}
+
+.control-group {
+    margin-bottom: 15px;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.control-group input[type="range"] {
+    width: 100%;
+    height: 10px;
+    -webkit-appearance: none;
+    background: #ddd;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+}
+
+.control-group span {
+    font-weight: bold;
+    color: var(--primary-dark);
+}
+
+/* Botones */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 18px;
+    font-size: 1.1em;
+}
+
+.primary-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.secondary-btn {
+    background-color: #f0f0f0;
+    color: var(--text-color);
+}
+
+.secondary-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* Datos en tiempo real */
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.data-item {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.data-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    color: var(--primary-dark);
+}
+
+.data-value {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* Escena */
+.scene {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin: 20px 0;
+    border: 2px solid var(--catapult-dark);
+    border-radius: var(--border-radius);
+    background: linear-gradient(to bottom, #87CEEB, #e0f7fa);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.scene::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: #6d4c41;
+    border-top: 2px solid #5d4037;
+    z-index: 1;
+}
+
+#trayectoriaCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+/* Catapulta mejorada */
+.catapult {
+    position: absolute;
+    bottom: 40px;
+    left: 100px;
+    width: 150px;
+    height: 40px;
+    z-index: 3;
+}
+
+.catapult .base {
+    width: 100%;
+    height: 100%;
+    background: var(--catapult-color);
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--catapult-dark);
+    border-bottom: none;
+}
+
+.catapult .supports {
+    display: flex;
+    width: 70%;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 40px;
+    left: 15%;
+    height: 50px;
+}
+
+.catapult .support {
+    width: 20px;
+    background: var(--catapult-light);
+    border-radius: 5px;
+    border: 1px solid var(--catapult-dark);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.catapult .support.left {
+    height: 70px;
+}
+
+.catapult .support.right {
+    height: 60px;
+}
+
+.catapult .arm-container {
+    position: absolute;
+    bottom: 70px;
+    left: calc(50% - 15px);
+    width: 30px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+}
+
+.catapult .pivot {
+    width: 20px;
+    height: 20px;
+    background: #424242;
+    border-radius: 50%;
+    border: 2px solid #212121;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.catapult .arm {
+    width: 12px;
+    height: 100px;
+    background: var(--catapult-light);
+    border-radius: 5px;
+    transform-origin: top center;
+    transform: rotate(0deg);
+    transition: transform 0.5s ease-in-out;
+    position: absolute;
+    top: 10px;
+    border: 1px solid var(--catapult-dark);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Bola mejorada */
+.ball {
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle at 30% 30%, var(--accent-color), var(--accent-dark));
+    border-radius: 50%;
+    position: absolute;
+    bottom: 130px;
+    left: 165px;
+    z-index: 4;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--accent-dark);
+}
+
+/* Panel de leyes */
+.leyes-panel {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: var(--panel-bg);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--primary-dark);
+    box-shadow: var(--shadow);
+    text-align: center;
+    min-height: 60px;
+}
+
+/* Sección de fórmulas */
+.formulas-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.formulas-panel {
+    margin-top: 15px;
+    text-align: left;
+}
+
+.formula-section {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.formula-description {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.formula-math {
+    background-color: #f5f5f5;
+    padding: 8px;
+    border-radius: 4px;
+    margin: 5px 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: var(--accent-dark);
+}
+
+.formula-example {
+    font-style: italic;
+    color: #666;
+    margin-top: 5px;
+}
+
+.formula-item {
+    margin: 15px 0;
+}
+
+.formula-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    color: #777;
+    font-size: 0.9em;
+    border-top: 1px solid #ddd;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .scene {
+        height: 300px;
+    }
+    
+    .data-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .formula-section {
+        padding: 10px;
+    }
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Catapulta de Newton - Simulación </title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <h1>Leyes de Newton - Simulación con Catapulta</h1>
+    </header>
+    
+    <main>
+        <div class="container">
+            <!-- Panel de controles -->
+            <div class="panel control-panel">
+                <h2>Controles de Lanzamiento</h2>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="angulo">Ángulo de Lanzamiento:</label>
+                        <input type="range" id="angulo" min="15" max="75" value="45">
+                        <span id="anguloValor">45°</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="potencia">Potencia de Lanzamiento:</label>
+                        <input type="range" id="potencia" min="5" max="20" value="15">
+                        <span id="potenciaValor">15</span>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button id="launchBtn" onclick="launch()" class="primary-btn">Lanzar Bola</button>
+                    <button id="resetBtn" onclick="resetearSimulacion()" class="secondary-btn">Reiniciar</button>
+                    <button id="pauseBtn" class="secondary-btn">Pausar</button>
+                    <button id="soundBtn" class="secondary-btn">Sonido: OFF</button>
+                </div>
+            </div>
+            
+            <!-- Datos teóricos -->
+            <div class="panel data-panel">
+                <h2>Datos Teóricos</h2>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">Tiempo de Vuelo:</div>
+                        <div class="data-value" id="tiempoTeorico">0.00 s</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Altura Máxima:</div>
+                        <div class="data-value" id="alturaTeorica">0.00 px</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Distancia:</div>
+                        <div class="data-value" id="distanciaTeorica">0.00 px</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Escena principal -->
+        <div class="scene">
+            <div class="catapult">
+                <div class="base"></div>
+                <div class="supports">
+                    <div class="support left"></div>
+                    <div class="support right"></div>
+                </div>
+                <div class="arm-container">
+                    <div class="pivot"></div>
+                    <div class="arm"></div>
+                </div>
+            </div>
+            <div class="ball" id="ball"></div>
+            <canvas id="trayectoriaCanvas" width="800" height="400"></canvas>
+        </div>
+        
+        <!-- Sección de leyes de Newton -->
+        <div id="leyes" class="leyes-panel">
+            Ajusta el ángulo y la potencia, luego presiona 'Lanzar Bola'
+        </div>
+        
+        <!-- Sección de fórmulas físicas -->
+        <div class="formulas-container">
+            <button id="toggleFormulas" class="secondary-btn">Mostrar Fórmulas</button>
+            <div id="formulas" class="panel formulas-panel" style="display: none;">
+                <h2>Fórmulas de Física - Leyes de Newton</h2>
+                
+                <div class="formula-section">
+                    <h3>Primera Ley de Newton: Ley de la Inercia</h3>
+                    <p class="formula-description">Un objeto permanecerá en reposo o con movimiento rectilíneo uniforme a menos que una fuerza externa actúe sobre él.</p>
+                    <div class="formula-example">En la simulación: La bola no se mueve hasta que la catapulta ejerce una fuerza sobre ella.</div>
+                </div>
+                
+                <div class="formula-section">
+                    <h3>Segunda Ley de Newton: F = m·a</h3>
+                    <p class="formula-description">La fuerza neta aplicada sobre un cuerpo es proporcional a la aceleración que adquiere dicho cuerpo.</p>
+                    <div class="formula-math">F = m·a</div>
+                    <div class="formula-example">En la simulación: La fuerza aplicada por la catapulta determina la aceleración inicial del proyectil.</div>
+                </div>
+                
+                <div class="formula-section">
+                    <h3>Tercera Ley de Newton: Acción y Reacción</h3>
+                    <p class="formula-description">Con toda acción ocurre siempre una reacción igual y contraria.</p>
+                    <div class="formula-example">En la simulación: Al tensar la catapulta y al impactar el proyectil con el suelo.</div>
+                </div>
+                
+                <div class="formula-section">
+                    <h3>Ecuaciones del Movimiento Parabólico</h3>
+                    <div class="formula-item">
+                        <div class="formula-title">Componentes de la velocidad inicial:</div>
+                        <div class="formula-math" id="formulaVelocidadX">v₀ₓ = v₀·cos(θ)</div>
+                        <div class="formula-math" id="formulaVelocidadY">v₀ᵧ = v₀·sin(θ)</div>
+                    </div>
+                    
+                    <div class="formula-item">
+                        <div class="formula-title">Altura máxima:</div>
+                        <div class="formula-math" id="formulaAltura">h = v₀ᵧ²/(2g)</div>
+                    </div>
+                    
+                    <div class="formula-item">
+                        <div class="formula-title">Tiempo de vuelo:</div>
+                        <div class="formula-math" id="formulaTiempo">t = 2v₀ᵧ/g</div>
+                    </div>
+                    
+                    <div class="formula-item">
+                        <div class="formula-title">Alcance horizontal:</div>
+                        <div class="formula-math" id="formulaAlcance">R = v₀ₓ·t</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>Simulación Educativa de las Leyes de Newton &copy; 2025</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
